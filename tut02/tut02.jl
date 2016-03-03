@@ -90,14 +90,12 @@ function main()
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0)
 	glBindVertexArray(0)
-
 	while !GLFW.WindowShouldClose(window)
 
 		# Poll for and process events
 		GLFW.PollEvents()
 
 		# Render here
-
 		glClearColor(0.2, 0.3, 0.3, 1.0)
 		glClear(GL_COLOR_BUFFER_BIT)
 		
