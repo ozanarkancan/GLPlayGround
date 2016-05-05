@@ -74,8 +74,9 @@ void main()
     outColor = mix(colKitten, colPuppy, 0.5);
 }
 """
-
-model = Signal(rotate(0f0, Vec((0, 0, 1f0))))
+ 
+s = Signal(rotate(0f0, Vec((0,0,1f0))))
+model = foldp(*, rotate(0f0, Vec((0,0,1f0))), s)
 view = lookat(Vec3((1.2f0, 1.2f0, 1.2f0)), Vec3((0f0, 0f0, 0f0)), Vec3((0f0, 0f0, 1f0)))
 proj = perspectiveprojection(Float32, 45, 800/600, 1, 10)
 
@@ -84,7 +85,7 @@ function key_callback(window, key, scancode, action, mode)
 		GLFW.SetWindowShouldClose(window, true	)
 	
 	elseif key == GLFW.KEY_Z && action == GLFW.PRESS
-		push!(model, rotationmatrix_z(time()*deg2rad(180)))
+		push!(s, rotationmatrix_z(deg2rad(90)))
 		Reactive.run_till_now()
 	end
 end	
