@@ -80,15 +80,6 @@ model = foldp(*, rotate(0f0, Vec((0,0,1f0))), s)
 view = lookat(Vec3((1.2f0, 1.2f0, 1.2f0)), Vec3((0f0, 0f0, 0f0)), Vec3((0f0, 0f0, 1f0)))
 proj = perspectiveprojection(Float32, 45, 800/600, 1, 10)
 
-function key_callback(window, key, scancode, action, mode)
-	if key == GLFW.KEY_ESCAPE && action == GLFW.PRESS
-		GLFW.SetWindowShouldClose(window, true	)
-	
-	elseif key == GLFW.KEY_Z && action == GLFW.PRESS
-		push!(s, rotationmatrix_z(deg2rad(90)))
-		Reactive.run_till_now()
-	end
-end	
 
 
 bufferdict = Dict(:position=>GLBuffer(positions),
@@ -101,6 +92,28 @@ bufferdict = Dict(:position=>GLBuffer(positions),
 		:indexes=>indexbuffer(elements))
 
 ro = std_renderobject(bufferdict, LazyShader(vertex_source, fragment_source))
+
+function key_callback(window, key, scancode, action, mode)
+	if key == GLFW.KEY_ESCAPE && action == GLFW.PRESS
+		GLFW.SetWindowShouldClose(window, true	)
+	
+	elseif key == GLFW.KEY_Z && action == GLFW.PRESS
+		for i=1:90
+			push!(s, rotationmatrix_z(deg2rad(1)))
+			Reactive.run_till_now()
+			glClear(GL_COLOR_BUFFER_BIT)
+			render(ro)
+			GLFW.SwapBuffers(window)
+
+			sleep(0.01)
+
+		end
+	elseif key == GLFW.KEY_R && action == GLFW.PRESS
+		push!(s, rotationmatrix_z(deg2rad(0)))
+		push!(model, rotationmatrix_z(deg2rad(0)))
+		Reactive.run_till_now()
+	end
+end	
 
 GLFW.SetKeyCallback(window, key_callback)
 
