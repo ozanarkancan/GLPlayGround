@@ -1,5 +1,6 @@
 using GLFW
 using ModernGL
+using GLUT
 
 function key_callback(window, key, scancode, action, mode)
 	if key == GLFW.KEY_ESCAPE && action == GLFW.PRESS
